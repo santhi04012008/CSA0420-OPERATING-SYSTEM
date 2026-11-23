@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char users[5][20], files[5][5][20];
+    int nf[5] = {0};
+    int nu = 0, i, u, choice;
+    char user[20], file[20];
+
+    while(1)
+    {
+        printf("\n1.Create User 2.Create File");
+        printf("\n3.Display 4.Exit\n");
+        scanf("%d", &choice);
+
+        if(choice == 1 && nu < 5)
+        {
+            printf("Enter username: ");
+            scanf("%19s", users[nu]);
+            nu++;
+            printf("User created\n");
+        }
+        else if(choice == 2)
+        {
+            printf("Enter username: ");
+            scanf("%19s", user);
+
+            for(u = 0; u < nu; u++)
+                if(strcmp(users[u], user) == 0)
+                    break;
+
+            if(u == nu)
+            {
+                printf("User not found\n");
+                continue;
+            }
+
+            if(nf[u] >= 5)
+            {
+                printf("Directory full\n");
+                continue;
+            }
+
+            printf("Enter filename: ");
+            scanf("%19s", file);
+
+            for(i = 0; i < nf[u]; i++)
+                if(strcmp(files[u][i], file) == 0)
+                    break;
+
+            if(i < nf[u])
+                printf("File already exists\n");
+            else
+            {
+                strcpy(files[u][nf[u]++], file);
+                printf("File created\n");
+            }
+        }
+        else if(choice == 3)
+        {
+            for(u = 0; u < nu; u++)
+            {
+                printf("\nUser: %s\n", users[u]);
+
+                for(i = 0; i < nf[u]; i++)
+                    printf("%s\n", files[u][i]);
+            }
+        }
+        else if(choice == 4)
+            break;
+    }
+
+    return 0;
+}
